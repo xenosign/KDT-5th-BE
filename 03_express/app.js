@@ -1,19 +1,24 @@
 // @ts-check
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = 4000;
 
 const mainRouter = require('./routes');
 const userRouter = require('./routes/users');
+const postRouter = require('./routes/posts');
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // localhost:4000
 app.use('/', mainRouter);
 // localhost:4000/users
 app.use('/users', userRouter);
+app.use('/posts', postRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello, Express world!');
